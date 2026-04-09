@@ -26,9 +26,8 @@ export const DFAGraph: React.FC = () => {
     spacingFactor: 1.25,
     directed: true,
     padding: 20,
-    animate: true,
-    animationDuration: 400,
-    animationEasing: 'ease-in-out'
+    animate: false,
+    fit: true,
   };
 
   const stylesheet: any[] = [
@@ -47,8 +46,6 @@ export const DFAGraph: React.FC = () => {
         'font-family': 'Inter, sans-serif',
         'font-size': '14px',
         'font-weight': '600', // boosted for legibility
-        'transition-property': 'background-color, border-width, width, height, color',
-        'transition-duration': 400
       }
     },
     {
@@ -108,6 +105,7 @@ export const DFAGraph: React.FC = () => {
   return (
     <div className="w-full h-full bg-slate-50 relative flex-1">
       <CytoscapeComponent
+        key={`graph-${currentStepIndex}-${dfa?.states.join(',')}`}
         elements={elements}
         style={{ width: '100%', height: '100%' }}
         stylesheet={stylesheet}

@@ -1,15 +1,19 @@
 import { Sidebar } from './components/Sidebar';
 import { MainCanvas } from './components/MainCanvas';
-import { Network } from 'lucide-react';
+import { Network, Info } from 'lucide-react';
 import { Toaster } from 'react-hot-toast';
+import { useDFAStore } from './store/dfaStore';
 
 function App() {
+  const { steps, currentStepIndex } = useDFAStore();
+  const currentStep = steps[currentStepIndex];
+
   return (
     <div className="flex flex-col h-screen bg-slate-50 text-slate-900 overflow-hidden font-sans">
       <Toaster position="top-right" />
       {/* Top Navigation Bar */}
       <header className="h-14 flex items-center px-6 bg-white border-b border-slate-200 shadow-sm z-10 shrink-0">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shadow-md shadow-indigo-200">
             <Network className="w-5 h-5 text-white" />
           </div>
@@ -18,6 +22,20 @@ function App() {
              <span className="text-slate-400 text-sm font-normal ml-2 tracking-wide hidden sm:inline-block">DFA Minimizer</span>
           </h1>
         </div>
+
+        {/* Virtual Tutor - in header bar */}
+        {currentStep && (
+          <div className="flex-1 flex items-center gap-2.5 ml-6 px-4 py-1.5 bg-indigo-50/70 rounded-lg border border-indigo-100 overflow-hidden min-w-0">
+            <Info className="w-4 h-4 text-indigo-500 shrink-0" />
+            <div className="min-w-0 flex items-center gap-2">
+              <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-wide whitespace-nowrap">Virtual Tutor (Step {currentStepIndex + 1})</span>
+              <span className="text-xs text-slate-500">—</span>
+              <p className="text-xs font-medium text-slate-700 truncate">
+                {currentStep.stepDescription}
+              </p>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Main Content Area */}
